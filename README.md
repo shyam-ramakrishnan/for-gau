@@ -11,7 +11,7 @@ A personalized Valentine's Proposal webpage.
 ## 🚀 Technical Setup
 * **Hosted via:** GitHub Pages
 * **Languages:** HTML5, CSS3, JavaScript
-* **Music:** Triggered via user interaction (the "Yes" click) to bypass browser autoplay blocks.
+* **Music:** Triggered via user interaction with the "Yes" click
 
 ---
 *Built with love for Gau.*
