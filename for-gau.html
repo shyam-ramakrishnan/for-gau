@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Gau ❤️</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fce4ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+            z-index: 10;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 { color: #d81b60; font-size: 2.5rem; margin-bottom: 20px; }
+
+        .gif-container img {
+            width: 200px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap; 
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.1s ease;
+        }
+
+        #yesBtn { background-color: #4caf50; color: white; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
+        #noBtn { background-color: #f44336; color: white; }
+
+        /* SUCCESS PAGE STYLING */
+        #success-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .message-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            line-height: 1.6;
+            color: #444;
+            text-align: left;
+        }
+
+        .heart {
+            position: fixed;
+            top: -10%;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear forwards;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="question-container">
+        <div class="gif-container">
+            <img src="https://media.tenor.com/zGm5acSjHCIAAAAC/cat-ask.gif" alt="Cute begging cat">
+        </div>
+        <h1>Will you be my Valentine, Gau?</h1>
+        <div class="buttons">
+            <button class="btn" id="yesBtn" onclick="acceptLove()">Yes</button>
+            <button class="btn" id="noBtn" onclick="negotiate()">No</button>
+        </div>
+    </div>
+
+    <div class="container" id="success-container">
+        <div class="gif-container">
+            <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Bear kisses">
+        </div>
+        <h1>Official Proclamation! ❤️</h1>
+        <div class="message-box">
+            <p><strong>Dearest Gau,</strong></p>
+            <p>Since you clicked "Yes" (and definitely didn't just give in because the button grew to the size of a planet), you have officially signed the <strong>2026 Love Contract</strong>!</p>
+            <p><strong>Your rewards include:</strong></p>
+            <ul>
+                <li>🍣 Unlimited sushi dates (my treat!).</li>
+                <li>👶 I am officially on Diaper Duty for Keshav for the first few months.</li>
+                <li>👣 Foot massages on demand (no questions asked!).</li>
+                <li>✈️ A future boarding pass to Paris.</li>
+            </ul>
+            <p>I love you more than code and coffee. You're the best partner I could ever ask for!</p>
+        </div>
+    </div>
+
+    <audio id="loveSong">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let noClickCount = 0;
+        const phrases = [
+            "No", 
+            "Are you sure?", 
+            "Really sure?", 
+            "I'll buy you sushi! 🍣", 
+            "Foot massages on demand! 👣",
+            "Think about Keshav! 👶", 
+            "I'll change diapers for MONTHS!", 
+            "I'll take you to Paris! 🇫🇷", 
+            "Last chance...", 
+            "You're breaking my heart 💔"
+        ];
+
+        function negotiate() {
+            noClickCount++;
+            const noBtn = document.getElementById("noBtn");
+            const yesBtn = document.getElementById("yesBtn");
+
+            if (noClickCount < phrases.length) {
+                noBtn.innerText = phrases[noClickCount];
+            }
+            
+            // The "Yes" button grows bigger with every "No" click
+            const newFontSize = 1.2 + (noClickCount * 0.9); 
+            const newPadding = 15 + (noClickCount * 12);
+            
+            yesBtn.style.fontSize = `${newFontSize}rem`;
+            yesBtn.style.padding = `${newPadding}px ${newPadding * 1.5}px`;
+
+            // On the 10th click, we make 'No' disappear to ensure a 'Yes'
+            if(noClickCount >= 10) {
+                noBtn.style.display = "none";
+            }
+        }
+
+        function acceptLove() {
+            document.getElementById("question-container").style.display = "none";
+            document.getElementById("success-container").style.display = "flex";
+
+            const audio = document.getElementById("loveSong");
+            audio.play().catch(e => {
+                console.log("Music will play once hosted or if song.mp3 is present.");
+            });
+
+            createHearts();
+        }
+
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement("div");
+                heart.className = "heart";
+                heart.innerHTML = "❤️";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.fontSize = (Math.random() * 30 + 10) + "px";
+                heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
